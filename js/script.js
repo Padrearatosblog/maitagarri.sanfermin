@@ -435,7 +435,7 @@ const openInfo = (key, visibleTitle) => {
   if (!info && !detail) return;
 
   infoTitle.textContent = visibleTitle || key;
-  infoDescription.textContent = detail?.detail || info?.[currentLanguage] || info?.es;
+  infoDescription.textContent = detail?.touristInfo || detail?.detail || info?.[currentLanguage] || info?.es;
   infoModal.classList.add("open");
   infoModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -533,6 +533,48 @@ const addWineAllergens = () => {
     card.appendChild(wrapper);
   });
 };
+
+const touristInfo = {
+  "Magras con tomate, 2 huevos fritos y patatas": "Las magras son lonchas finas de cerdo curado, muy habituales en almuerzos navarros. Se sirven con tomate, huevos fritos y patatas: un plato contundente para empezar San Fermín.",
+  "Chistorra con tomate, 2 huevos fritos y patatas": "La chistorra es un embutido fresco típico de Navarra, parecido a una longaniza fina con pimentón. Aquí se sirve con tomate, huevos fritos y patatas.",
+  "Chistorra de Arbizu": "La chistorra es un embutido navarro fresco, fino y especiado. Arbizu es una localidad navarra muy reconocida por este producto tradicional.",
+  "Ajoarriero a la navarra con un huevo frito": "El ajoarriero navarro es un guiso tradicional de bacalao desmigado con verduras y salsa melosa. Se acompaña con huevo frito.",
+  "Ajoarriero navarro": "Guiso típico navarro de bacalao desmigado, verduras y tomate, cocinado lentamente hasta quedar meloso y lleno de sabor.",
+  "Estofado de toro con patatas fritas": "Guiso de carne de toro cocinado lentamente hasta quedar tierno. Es un plato intenso, festivo y muy ligado al ambiente de San Fermín.",
+  "Estofado de toro": "Carne de toro guisada a fuego lento con vino tinto hasta quedar melosa y muy tierna. Plato potente y tradicional.",
+  "Lagarto ibérico": "No es lagarto animal: es un corte del cerdo ibérico, situado entre las costillas. Es jugoso, sabroso y funciona muy bien a la parrilla.",
+  "Melosos de carrilleras": "Las carrilleras son piezas de la mejilla del animal. Cocinadas lentamente quedan muy tiernas, gelatinosas y suaves.",
+  "Torrija": "Postre tradicional parecido a un pan dulce o brioche empapado, dorado y caramelizado. Muy jugoso por dentro.",
+  "Torrija caramelizada": "Postre de pan o brioche empapado y caramelizado, crujiente por fuera y muy jugoso por dentro.",
+  "Torrija de pan brioche caramelizada": "Brioche empapado y caramelizado, con exterior crujiente y corazón cremoso. Una versión elegante de la torrija tradicional.",
+  "Cuajada": "Postre lácteo tradicional del norte, de textura suave, parecido a una crema cuajada de leche.",
+  "Cuajada de la casa": "Postre lácteo tradicional, suave y cremoso, típico del norte. Se suele tomar solo, con miel o con frutos secos.",
+  "Cuajada de leche de oveja con nueces y miel": "Postre tradicional de leche de oveja cuajada, servido con miel y nueces. Suave, lácteo y muy navarro.",
+  "Queso, membrillo y nuez": "Combinación clásica de queso con membrillo, un dulce elaborado con fruta de membrillo, y nuez. Contraste salado, dulce y crujiente.",
+  "Cogollos de Tudela": "Los cogollos son corazones pequeños y tiernos de lechuga. Los de Tudela son muy apreciados en Navarra.",
+  "Cabra en equilibrio": "Ensalada tibia con queso de cabra, remolacha, nueces caramelizadas y mermelada de tomate. Juego de dulce, cremoso y crujiente.",
+  "Icónico Ibérico": "Jamón ibérico servido con pan tostado y tumaca, una preparación de tomate aliñado sobre pan.",
+  "Corazón de alcachofas": "Centro tierno de la alcachofa, servido con salsa blanca cremosa y jamón ibérico crujiente.",
+  "Baba ganug": "Crema de berenjena asada típica de Oriente Medio, con tahini. Tiene un toque ahumado y textura cremosa.",
+  "Falafel": "Bolitas crujientes de garbanzo y hierbas, muy populares en la cocina de Oriente Medio.",
+  "Kofta": "Brocheta de carne especiada, en este caso estilo Alepo, con hierbas y especias tradicionales.",
+  "Shish tawuk": "Brochetas de pollo marinado, típicas de Oriente Medio. Se sirven con crema de ajo y pan árabe con muhammara.",
+  "Pulpo a la parrilla": "Pulpo marcado a la parrilla sobre patatas panadera, con aceite de oliva y un toque de cayena.",
+  "Vieiras del pacífico": "Las vieiras son moluscos de carne delicada, conocidos también como scallops. Se sirven a la plancha.",
+  "Sepia a la plancha": "La sepia es un molusco similar al calamar, de textura firme y sabor marino. A la plancha queda dorada y tierna.",
+  "Sepia con panaderas": "Sepia servida con patatas panaderas. La sepia es un molusco parecido al calamar, firme y sabroso.",
+  "Gran chuletón premium": "Chuletón grande de vaca para compartir, con maduración de 21 días. Se sirve en formato contundente, pensado para amantes de la carne.",
+  "Solomillo de vaca madurada": "Corte muy tierno de vaca madurada. La maduración intensifica el sabor y mejora la textura de la carne.",
+  "Entrecot ahumado": "Corte de vaca marcado a la parrilla con toque ahumado, jugoso por dentro y con costra dorada.",
+  "Parmentier": "La parmentier es una crema o puré fino de patata, usada como base suave para carnes guisadas."
+};
+
+Object.entries(touristInfo).forEach(([key, text]) => {
+  menuDetails[key] = {
+    ...(menuDetails[key] || {}),
+    touristInfo: text
+  };
+});
 
 closeInfoButtons.forEach((button) => {
   button.addEventListener("click", closeInfo);

@@ -723,9 +723,9 @@ body::before {
 
 .hero {
   min-height: 92svh;
-  padding: 7.2rem 1rem 3.4rem;
+  padding: 7.2rem 1rem 4.6rem;
   background-image:
-    linear-gradient(180deg, rgba(4, 3, 3, 0.28) 0%, rgba(5, 4, 3, 0.7) 42%, rgba(7, 6, 5, 0.98) 100%),
+    linear-gradient(180deg, rgba(4, 3, 3, 0.16) 0%, rgba(5, 4, 3, 0.42) 38%, rgba(7, 6, 5, 0.95) 100%),
     linear-gradient(120deg, rgba(215, 25, 32, 0.28), transparent 45%),
     url("../img/hero.jpg");
 }
@@ -769,33 +769,6 @@ body::before {
   background: var(--sf-red);
 }
 
-.sf-badge {
-  display: inline-grid;
-  grid-template-columns: auto auto;
-  align-items: center;
-  gap: 0.45rem;
-  margin-bottom: 1rem;
-  padding: 0.35rem 0.45rem 0.35rem 0.7rem;
-  border: 1px solid rgba(255, 248, 236, 0.28);
-  border-radius: 999px;
-  background: rgba(7, 6, 5, 0.58);
-  backdrop-filter: blur(12px);
-}
-
-.sf-badge span {
-  color: rgba(255, 248, 236, 0.74);
-  font-size: 0.74rem;
-  font-weight: 900;
-}
-
-.sf-badge strong {
-  padding: 0.28rem 0.55rem;
-  border-radius: 999px;
-  color: var(--sf-white);
-  background: var(--sf-red);
-  font-size: 0.72rem;
-}
-
 .kicker,
 .eyebrow {
   color: var(--sf-red);
@@ -803,32 +776,23 @@ body::before {
 }
 
 .hero h1 {
-  max-width: 8ch;
+  max-width: 9ch;
   margin: 0 auto;
   color: var(--sf-white);
-  font-size: clamp(3.05rem, 16vw, 6.5rem);
+  font-size: clamp(3.35rem, 17vw, 6.8rem);
+  text-shadow: 0 14px 34px rgba(0, 0, 0, 0.72);
 }
 
 .season {
   color: var(--sf-paper);
+  margin-top: 0.55rem;
+  margin-bottom: 0.75rem;
 }
 
-.hero-tags {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.45rem;
-  margin: 0 auto 1.35rem;
-}
-
-.hero-tags span {
-  padding: 0.45rem 0.68rem;
-  border: 1px solid rgba(255, 248, 236, 0.22);
-  border-radius: 999px;
-  color: rgba(255, 248, 236, 0.82);
-  background: rgba(7, 6, 5, 0.48);
-  font-size: 0.76rem;
-  font-weight: 800;
+.hero-copy {
+  margin-bottom: 1.25rem;
+  font-size: 0.98rem;
+  line-height: 1.55;
 }
 
 .intro {
