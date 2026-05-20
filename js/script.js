@@ -11,6 +11,169 @@ const closeInfoButtons = document.querySelectorAll("[data-close-info]");
 
 let currentLanguage = localStorage.getItem("maitagarri-language") || "es";
 
+const allergenLabels = {
+  Gluten: { es: "Gluten", en: "Gluten", fr: "Gluten" },
+  Huevo: { es: "Huevo", en: "Egg", fr: "Oeuf" },
+  "Lácteos": { es: "Lácteos", en: "Dairy", fr: "Lait" },
+  "Frutos secos": { es: "Frutos secos", en: "Nuts", fr: "Fruits secs" },
+  Pescado: { es: "Pescado", en: "Fish", fr: "Poisson" },
+  Marisco: { es: "Marisco", en: "Shellfish", fr: "Crustacés" },
+  Moluscos: { es: "Moluscos", en: "Molluscs", fr: "Mollusques" },
+  Sulfitos: { es: "Sulfitos", en: "Sulphites", fr: "Sulfites" },
+  Mostaza: { es: "Mostaza", en: "Mustard", fr: "Moutarde" },
+  Sésamo: { es: "Sésamo", en: "Sesame", fr: "Sésame" },
+  Soja: { es: "Soja", en: "Soy", fr: "Soja" }
+};
+
+const dishAllergens = {
+  "Chistorra de Arbizu": ["Gluten", "Sulfitos"],
+  "Revuelto de bacalao": ["Huevo", "Pescado"],
+  "Ensalada de queso de cabra con frutos secos": ["Lácteos", "Frutos secos"],
+  "Chuletón premium": ["Sulfitos"],
+  "Lagarto ibérico": ["Sulfitos"],
+  "Solomillo de vaca": ["Sulfitos"],
+  "Lubina al horno": ["Pescado", "Sulfitos"],
+  "Sepia con panaderas": ["Moluscos"],
+  "Tarta de queso": ["Gluten", "Huevo", "Lácteos"],
+  "Cuajada": ["Lácteos"],
+  "Tarta de chocolate": ["Gluten", "Huevo", "Lácteos"],
+  "Torrija": ["Gluten", "Huevo", "Lácteos"],
+  "Flan": ["Huevo", "Lácteos"]
+};
+
+const menuDetails = {
+  "Chuletón premium": {
+    title: "Chuletón extra premium a la parrilla con pimiento del piquillo",
+    detail: "La especialidad del menú sidrería. Pieza de 1000 gr aprox. a la parrilla, servida con pimiento del piquillo."
+  },
+  "Gran chuletón premium": {
+    detail: "Maduración de 21 días para alcanzar su máxima ternura, servido chisporroteante en fondue de barro tradicional que potencia sus intensos matices ahumados (1000gr).",
+    price: "75"
+  },
+  "Ensalada griega": {
+    title: "Ensalada griega con tomate rosa y ribbons de pepino en ola",
+    detail: "Queso feta en geometría irregular, tomate rosa, ribbons de pepino en ola y aceitunas de Kalamata, salsa de yogur y flor comestible.",
+    price: "15"
+  },
+  "Cogollos de Tudela": {
+    title: "Cogollos de Tudela a la parrilla",
+    detail: "Cogollos de Tudela marcados a la parrilla con aceite ahumado, anchoas, nube de queso Idiazabal y vinagreta de tomate asado.",
+    price: "16"
+  },
+  "Cabra en equilibrio": {
+    detail: "Ensalada tibia de queso de cabra y remolacha asada, nueces caramelizadas y mermelada de tomate.",
+    price: "18"
+  },
+  "Icónico Ibérico": {
+    detail: "Plato de jamón ibérico con su pan tostado y tumaca casera (100gr).",
+    price: "27"
+  },
+  "Chistorra de Arbizu": {
+    detail: "Elaborada con métodos tradicionales navarros y una excelente calidad.",
+    price: "14,8"
+  },
+  "Corazón de alcachofas": {
+    detail: "Tierno corazón de alcachofas bañado en cremosa salsa blanca y coronado con crujiente jamón ibérico.",
+    price: "17,5"
+  },
+  "Hummus casero": {
+    detail: "Una crema de garbanzos sedosa y untuosa con el equilibrio perfecto de tahini, limón y ajo.",
+    price: "10"
+  },
+  "Baba ganug": {
+    title: "Baba ganug casero",
+    detail: "Delicioso y cremoso dip de berenjenas asadas con un toque ahumado, tahini y yogur.",
+    price: "11"
+  },
+  "Falafel": {
+    detail: "Crujientes bolitas de falafel acompañadas de una fresca ensalada de tomate, cebolla y perejil.",
+    price: "14"
+  },
+  "Kofta": {
+    detail: "Exquisita brocheta de ternera estilo Alepo, asada con especias tradicionales y hierbas frescas.",
+    price: "26,9"
+  },
+  "Shish tawuk": {
+    detail: "Jugosas brochetas de pollo estilo shish tawook a la parrilla, servidas con crema de ajo y pan árabe con muhammara de nueces y pimientos asados.",
+    price: "26,9"
+  },
+  "Pulpo a la parrilla": {
+    detail: "Patas de pulpo a la parrilla sobre cama de patatas panadera, servido en plato de barro, aceite de oliva virgen extra en hilo y polvo de cayena.",
+    price: "25,9"
+  },
+  "Vieiras del pacífico": {
+    title: "Vieiras del pacífico a la plancha",
+    detail: "Vieiras del pacífico a la plancha con aliño de aceite de oliva virgen extra, ajo y perejil, flor del delta mediterránea negra.",
+    price: "22"
+  },
+  "Tortilla de bacalao": {
+    detail: "Una tradición de la cocina de caserío vasca.",
+    price: "18,5"
+  },
+  "Paella de marisco": {
+    detail: "Una vibrante y aromática explosión de sabores marineros.",
+    price: "21,5"
+  },
+  "Ajoarriero navarro": {
+    detail: "Reconfortante guiso navarro de bacalao desmigado y verduras cocinado a fuego lento para lograr una textura melosa y llena de sabor.",
+    price: "21,8"
+  },
+  "Gambones a la miel": {
+    detail: "Una explosión de sabor agridulce donde la miel carameliza perfectamente la textura tierna de los gambones.",
+    price: "24"
+  },
+  "Sepia a la plancha": {
+    detail: "Delicia marina de textura firme pero tierna, dorada a alta temperatura para lograr un sabor irresistible.",
+    price: "25,9"
+  },
+  "Lubina al horno": {
+    detail: "Lubina al horno que se deshace en láminas al contacto con el tenedor, con fondo de patatas melosas doradas por fuera.",
+    price: "26,9"
+  },
+  "Solomillo de vaca madurada": {
+    title: "Solomillo de vaca madurada a la parrilla",
+    detail: "Excepcionalmente tierna y con un sabor intenso, acompañado de salsa roquefort o de pimienta al gusto.",
+    price: "33,9"
+  },
+  "Entrecot ahumado": {
+    title: "Entrecot ahumado a la parrilla",
+    detail: "Marcado en parrilla, jugoso y tierno con una costra exterior irresistible.",
+    price: "27,5"
+  },
+  "Melosos de carrilleras": {
+    detail: "Melosas carrilleras guisadas al vino tinto sobre una sedosa parmentier de patata, equilibrando intensidad y dulzor.",
+    price: "25,9"
+  },
+  "Estofado de toro": {
+    detail: "Manjar meloso y untuoso que se deshace en la boca, cocinado a fuego lento con salsa inconfundible de vino tinto.",
+    price: "25,9"
+  },
+  "Lagarto ibérico": {
+    detail: "Lagarto ibérico a la parrilla con su grasa fundida, coronado con chimichurri para una experiencia tierna y vibrante.",
+    price: "26,8"
+  },
+  "Tarta de queso crema horneada": {
+    detail: "Sedosa y cremosa tentación horneada, con un exterior tostado que esconde un corazón irresistiblemente suave.",
+    price: "7,8"
+  },
+  "Cuajada de leche de oveja con nueces y miel": {
+    detail: "Caricia cremosa de leche de oveja, con la dulzura dorada de la miel y el contraste crujiente de las nueces.",
+    price: "7,8"
+  },
+  "Torrija de pan brioche caramelizada": {
+    detail: "Brioche caramelizada, crujiente por fuera y de corazón fundente de una suave crema pastelera.",
+    price: "8,5"
+  },
+  "Tarta de chocolate": {
+    detail: "El sueño de cualquier amante del chocolate: intenso, suave y cremoso en un solo bocado.",
+    price: "7,8"
+  },
+  "Flan de huevo": {
+    detail: "Suave flan artesanal de vainilla con caramelo dorado, coronado con nata montada para una experiencia cremosa.",
+    price: "7,5"
+  }
+};
+
 const dishInfo = {
   "Magras con tomate, 2 huevos fritos y patatas": {
     es: "Lonchas finas de cerdo curado cocinadas con tomate, acompañadas de huevos fritos y patatas. Un almuerzo muy navarro para empezar fuerte la mañana.",
@@ -267,11 +430,12 @@ const getDishKey = (element) => {
 };
 
 const openInfo = (key, visibleTitle) => {
+  const detail = menuDetails[key];
   const info = dishInfo[key];
-  if (!info) return;
+  if (!info && !detail) return;
 
   infoTitle.textContent = visibleTitle || key;
-  infoDescription.textContent = info[currentLanguage] || info.es;
+  infoDescription.textContent = detail?.detail || info?.[currentLanguage] || info?.es;
   infoModal.classList.add("open");
   infoModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -286,13 +450,30 @@ const closeInfo = () => {
 const addInfoButtons = () => {
   document.querySelectorAll(".dish-card, .line-dish, .tile, .meat-hero, .menu-column li").forEach((element) => {
     const key = getDishKey(element);
-    if (!dishInfo[key] || element.querySelector(".info-btn")) return;
+    const allergens = dishAllergens[key];
+
+    if (allergens && !element.querySelector(".inline-allergens")) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "allergens inline-allergens";
+      allergens.forEach((allergen) => {
+        const tag = document.createElement("span");
+        const label = allergenLabels[allergen];
+        tag.dataset.es = label.es;
+        tag.dataset.en = label.en;
+        tag.dataset.fr = label.fr;
+        tag.textContent = label[currentLanguage] || label.es;
+        wrapper.appendChild(tag);
+      });
+      element.appendChild(wrapper);
+    }
+
+    if ((!dishInfo[key] && !menuDetails[key]) || element.querySelector(".info-btn")) return;
 
     element.dataset.infoKey = key;
     const button = document.createElement("button");
     button.className = "info-btn";
     button.type = "button";
-    button.textContent = "i";
+    button.textContent = "?";
     button.setAttribute("aria-label", "Información del plato");
     button.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -301,6 +482,55 @@ const addInfoButtons = () => {
       openInfo(key, visibleTitle);
     });
     element.appendChild(button);
+  });
+};
+
+const applyMenuDetails = () => {
+  document.querySelectorAll(".line-dish, .tile, .meat-hero, .menu-column li").forEach((element) => {
+    const key = getDishKey(element);
+    const detail = menuDetails[key];
+    if (!detail) return;
+
+    element.dataset.infoKey = key;
+
+    const titleTarget = element.matches("li") ? element : element.querySelector("h3");
+    if (detail.title && titleTarget) {
+      titleTarget.dataset.es = detail.title;
+      if (currentLanguage === "es") titleTarget.textContent = detail.title;
+    }
+
+    if (!element.matches("li") && detail.detail && !element.querySelector(".dish-detail")) {
+      const text = document.createElement("p");
+      text.className = "dish-detail";
+      text.dataset.es = detail.detail;
+      text.dataset.en = detail.detail;
+      text.dataset.fr = detail.detail;
+      text.textContent = detail.detail;
+      element.appendChild(text);
+    }
+
+    if (!element.matches("li") && detail.price && !element.querySelector(".dish-price")) {
+      const price = document.createElement("span");
+      price.className = "dish-price";
+      price.textContent = `${detail.price}€`;
+      element.appendChild(price);
+    }
+  });
+};
+
+const addWineAllergens = () => {
+  document.querySelectorAll(".wine-card").forEach((card) => {
+    if (card.querySelector(".allergens")) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "allergens";
+    const tag = document.createElement("span");
+    tag.dataset.es = "Sulfitos";
+    tag.dataset.en = "Sulphites";
+    tag.dataset.fr = "Sulfites";
+    tag.textContent = currentLanguage === "en" ? "Sulphites" : currentLanguage === "fr" ? "Sulfites" : "Sulfitos";
+    wrapper.appendChild(tag);
+    card.appendChild(wrapper);
   });
 };
 
@@ -372,6 +602,8 @@ backTopButton.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+applyMenuDetails();
+addWineAllergens();
 addInfoButtons();
 setLanguage(currentLanguage);
 showPanel(localStorage.getItem("maitagarri-panel") || "almuerzo", false);
