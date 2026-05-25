@@ -583,7 +583,6 @@ h3 {
   font-weight: 800;
 }
 
-.whatsapp,
 .back-top {
   position: fixed;
   z-index: 12;
@@ -594,16 +593,6 @@ h3 {
   border-radius: 50%;
   box-shadow: 0 16px 35px rgba(0, 0, 0, 0.36);
   font-weight: 900;
-}
-
-.whatsapp {
-  left: 1rem;
-  bottom: 1rem;
-  width: 3.35rem;
-  height: 3.35rem;
-  color: #082414;
-  background: linear-gradient(135deg, #4ff08a, #22c763);
-  font-size: 0.78rem;
 }
 
 .back-top {
@@ -1129,10 +1118,6 @@ body.modal-open {
 
 .footer {
   padding-bottom: 6rem;
-}
-
-.whatsapp {
-  color: #06180d;
 }
 
 @media (min-width: 720px) {

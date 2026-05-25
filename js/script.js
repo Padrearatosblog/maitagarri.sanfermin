@@ -31,14 +31,18 @@ const dishAllergens = {
   "Ensalada de queso de cabra con frutos secos": ["Lácteos", "Frutos secos"],
   "Chuletón premium": ["Sulfitos"],
   "Lagarto ibérico": ["Sulfitos"],
-  "Solomillo de vaca": ["Sulfitos"],
+  "Solomillo de vaca": ["Lácteos", "Sulfitos"],
   "Lubina al horno": ["Pescado", "Sulfitos"],
   "Sepia con panaderas": ["Moluscos"],
   "Tarta de queso": ["Gluten", "Huevo", "Lácteos"],
   "Cuajada": ["Lácteos"],
+  "Cuajada de la casa": ["Lácteos"],
   "Tarta de chocolate": ["Gluten", "Huevo", "Lácteos"],
   "Torrija": ["Gluten", "Huevo", "Lácteos"],
-  "Flan": ["Huevo", "Lácteos"]
+  "Torrija caramelizada": ["Gluten", "Huevo", "Lácteos"],
+  "Queso, membrillo y nuez": ["Lácteos", "Frutos secos"],
+  "Flan": ["Huevo", "Lácteos"],
+  "Flan de huevo": ["Huevo", "Lácteos"]
 };
 
 const menuDetails = {
