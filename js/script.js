@@ -640,6 +640,35 @@ const showPanel = (panelName, shouldScroll = true) => {
   }
 };
 
+const orderCartaSections = () => {
+  const worldSection = document.querySelector("#mundo");
+  const meatSection = document.querySelector("#carnes");
+
+  if (worldSection && meatSection) {
+    worldSection.insertAdjacentElement("afterend", meatSection);
+  }
+};
+
+const numberCartaDishes = () => {
+  const sections = ["#entrantes", "#mundo", "#carnes", "#mar", "#postres"];
+  let number = 21;
+
+  sections.forEach((selector) => {
+    const section = document.querySelector(selector);
+    if (!section) return;
+
+    section.querySelectorAll(".line-dish, .tile, .meat-hero").forEach((dish) => {
+      const formatted = String(number).padStart(2, "0");
+      dish.dataset.number = formatted;
+
+      const fixedNumber = dish.querySelector(".carta-number");
+      if (fixedNumber) fixedNumber.textContent = formatted;
+
+      number += 1;
+    });
+  });
+};
+
 panelButtons.forEach((button) => {
   button.addEventListener("click", () => showPanel(button.dataset.panelTarget));
 });
@@ -651,6 +680,8 @@ backTopButton.addEventListener("click", () => {
 applyMenuDetails();
 addWineAllergens();
 addInfoButtons();
+orderCartaSections();
+numberCartaDishes();
 setLanguage(currentLanguage);
 showPanel(localStorage.getItem("maitagarri-panel") || "almuerzo", false);
 toggleBackTop();
