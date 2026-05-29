@@ -439,7 +439,10 @@ const openInfo = (key, visibleTitle) => {
   if (!info && !detail) return;
 
   infoTitle.textContent = visibleTitle || key;
-  infoDescription.textContent = detail?.touristInfo || detail?.detail || info?.[currentLanguage] || info?.es;
+  const touristText = typeof detail?.touristInfo === "string"
+    ? detail.touristInfo
+    : detail?.touristInfo?.[currentLanguage] || detail?.touristInfo?.es;
+  infoDescription.textContent = touristText || detail?.detail || info?.[currentLanguage] || info?.es;
   infoModal.classList.add("open");
   infoModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -573,10 +576,144 @@ const touristInfo = {
   "Parmentier": "La parmentier es una crema o puré fino de patata, usada como base suave para carnes guisadas."
 };
 
+const touristInfoTranslations = {
+  "Magras con tomate, 2 huevos fritos y patatas": {
+    en: "Magras are thin slices of cured pork, very common in Navarrese breakfasts. They are served with tomato, fried eggs and potatoes: a hearty dish to start San Fermin.",
+    fr: "Les magras sont de fines tranches de porc seche, tres courantes dans les petits dejeuners navarrais. Elles sont servies avec tomate, oeufs frits et pommes de terre."
+  },
+  "Chistorra con tomate, 2 huevos fritos y patatas": {
+    en: "Chistorra is a fresh Navarrese sausage, similar to a thin paprika-seasoned longaniza. Here it is served with tomato, fried eggs and potatoes.",
+    fr: "La chistorra est une saucisse fraiche navarraise, fine et relevee au paprika. Elle est servie ici avec tomate, oeufs frits et pommes de terre."
+  },
+  "Chistorra de Arbizu": {
+    en: "Chistorra is a fresh, thin and lightly spiced Navarrese sausage. Arbizu is a Navarrese town well known for this traditional product.",
+    fr: "La chistorra est une saucisse navarraise fraiche, fine et epicee. Arbizu est une commune navarraise reconnue pour ce produit traditionnel."
+  },
+  "Ajoarriero a la navarra con un huevo frito": {
+    en: "Navarrese ajoarriero is a traditional stew of shredded cod with vegetables and a rich sauce. It is served with a fried egg.",
+    fr: "L'ajoarriero navarrais est un ragout traditionnel de morue emiettee avec legumes et sauce onctueuse. Il est servi avec un oeuf frit."
+  },
+  "Ajoarriero navarro": {
+    en: "A typical Navarrese stew made with shredded cod, vegetables and tomato, slowly cooked until rich and tender.",
+    fr: "Ragout typique navarrais de morue emiettee, legumes et tomate, mijote lentement jusqu'a obtenir une texture fondante."
+  },
+  "Estofado de toro con patatas fritas": {
+    en: "Bull meat stew cooked slowly until tender. It is an intense, festive dish closely linked to San Fermin.",
+    fr: "Ragout de viande de taureau mijote jusqu'a tendrete. C'est un plat intense, festif et lie a San Fermin."
+  },
+  "Estofado de toro": {
+    en: "Bull meat stewed slowly with red wine until tender and silky. A powerful traditional dish.",
+    fr: "Viande de taureau mijotee au vin rouge jusqu'a devenir fondante. Un plat traditionnel puissant."
+  },
+  "Lagarto ibérico": {
+    en: "It is not lizard: lagarto is a cut of Iberian pork located between the ribs. It is juicy, flavorful and excellent on the grill.",
+    fr: "Ce n'est pas du lezard: le lagarto est un morceau de porc iberique situe entre les cotes. Il est juteux, savoureux et parfait a la braise."
+  },
+  "Melosos de carrilleras": {
+    en: "Carrilleras are cheek cuts. Slow cooking makes them very tender, silky and soft.",
+    fr: "Les carrilleras sont des morceaux de joue. Une cuisson lente les rend tres tendres, fondantes et douces."
+  },
+  "Torrija": {
+    en: "A traditional dessert similar to soaked sweet bread or brioche, browned and caramelized. Very juicy inside.",
+    fr: "Dessert traditionnel proche d'un pain doux ou d'une brioche imbibee, doree et caramelisee. Tres moelleux a l'interieur."
+  },
+  "Torrija caramelizada": {
+    en: "Bread or brioche soaked and caramelized, crisp outside and very juicy inside.",
+    fr: "Pain ou brioche imbibee et caramelisee, croustillante a l'exterieur et tres moelleuse dedans."
+  },
+  "Torrija de pan brioche caramelizada": {
+    en: "Caramelized soaked brioche, crisp outside with a creamy center. An elegant version of the traditional torrija.",
+    fr: "Brioche imbibee et caramelisee, croustillante dehors avec un coeur cremeux. Une version elegante de la torrija traditionnelle."
+  },
+  "Cuajada": {
+    en: "A traditional dairy dessert from northern Spain, with a soft texture similar to set milk cream.",
+    fr: "Dessert laitier traditionnel du nord, a la texture douce, proche d'une creme de lait prise."
+  },
+  "Cuajada de la casa": {
+    en: "A traditional soft and creamy dairy dessert from northern Spain. It is often served plain, with honey or nuts.",
+    fr: "Dessert laitier traditionnel, doux et cremeux, typique du nord. Il se sert nature, avec miel ou fruits secs."
+  },
+  "Cuajada de leche de oveja con nueces y miel": {
+    en: "A traditional sheep milk curd served with honey and walnuts. Soft, dairy-forward and very Navarrese.",
+    fr: "Caille traditionnelle de lait de brebis servie avec miel et noix. Douce, lactee et tres navarraise."
+  },
+  "Queso, membrillo y nuez": {
+    en: "A classic combination of cheese with quince paste, a sweet fruit preserve, and walnut. Salty, sweet and crunchy.",
+    fr: "Association classique de fromage, pate de coing, une preparation sucree de fruit, et noix. Sale, sucre et croquant."
+  },
+  "Cogollos de Tudela": {
+    en: "Cogollos are small, tender lettuce hearts. Those from Tudela are especially appreciated in Navarre.",
+    fr: "Les cogollos sont de petits coeurs de laitue tendres. Ceux de Tudela sont particulierement apprecies en Navarre."
+  },
+  "Cabra en equilibrio": {
+    en: "Warm salad with goat cheese, roasted beetroot, caramelized walnuts and tomato jam. Sweet, creamy and crunchy contrasts.",
+    fr: "Salade tiede au fromage de chevre, betterave rotie, noix caramelisees et confiture de tomate. Contraste sucre, cremeux et croquant."
+  },
+  "Icónico Ibérico": {
+    en: "Iberian ham served with toasted bread and tumaca, a seasoned tomato spread for bread.",
+    fr: "Jambon iberique servi avec pain grille et tumaca, une preparation de tomate assaisonnee pour le pain."
+  },
+  "Corazón de alcachofas": {
+    en: "Tender artichoke heart served with creamy white sauce and crisp Iberian ham.",
+    fr: "Coeur tendre d'artichaut servi avec sauce blanche cremeuse et jambon iberique croustillant."
+  },
+  "Baba ganug": {
+    en: "A Middle Eastern roasted eggplant cream with tahini. It has a smoky touch and creamy texture.",
+    fr: "Creme d'aubergine rotie du Moyen-Orient avec tahini. Elle a une touche fumee et une texture cremeuse."
+  },
+  "Falafel": {
+    en: "Crisp chickpea and herb balls, very popular in Middle Eastern cuisine.",
+    fr: "Boulettes croustillantes de pois chiches et herbes, tres populaires dans la cuisine du Moyen-Orient."
+  },
+  "Kofta": {
+    en: "A spiced meat skewer, here Aleppo-style, with traditional spices and fresh herbs.",
+    fr: "Brochette de viande epicee, ici style Alep, avec epices traditionnelles et herbes fraiches."
+  },
+  "Shish tawuk": {
+    en: "Marinated chicken skewers typical of Middle Eastern cuisine. Served with garlic cream and Arabic bread with muhammara.",
+    fr: "Brochettes de poulet marinees, typiques du Moyen-Orient. Servies avec creme d'ail et pain arabe a la muhammara."
+  },
+  "Pulpo a la parrilla": {
+    en: "Grilled octopus over panadera potatoes, with olive oil and a touch of cayenne.",
+    fr: "Poulpe grille sur pommes de terre panadera, avec huile d'olive et une touche de cayenne."
+  },
+  "Vieiras del pacífico": {
+    en: "Scallops are delicate molluscs with a soft, sweet seafood flavor. Served grilled.",
+    fr: "Les noix de Saint-Jacques sont des mollusques delicats a la saveur marine douce. Servies a la plancha."
+  },
+  "Sepia a la plancha": {
+    en: "Cuttlefish is a mollusc similar to squid, with firm texture and sea flavor. Grilled until golden and tender.",
+    fr: "La seiche est un mollusque proche du calamar, a la texture ferme et au gout marin. Grillee jusqu'a etre doree et tendre."
+  },
+  "Sepia con panaderas": {
+    en: "Cuttlefish served with panadera potatoes. Cuttlefish is a mollusc similar to squid, firm and flavorful.",
+    fr: "Seiche servie avec pommes de terre panadera. La seiche est un mollusque proche du calamar, ferme et savoureux."
+  },
+  "Gran chuletón premium": {
+    en: "A large aged beef rib steak for sharing, matured for 21 days. A generous dish for meat lovers.",
+    fr: "Grande cote de boeuf maturee a partager, avec 21 jours de maturation. Un plat genereux pour amateurs de viande."
+  },
+  "Solomillo de vaca madurada": {
+    en: "A very tender cut of aged beef. Maturation intensifies flavor and improves the meat's texture.",
+    fr: "Morceau tres tendre de boeuf mature. La maturation intensifie la saveur et ameliore la texture."
+  },
+  "Entrecot ahumado": {
+    en: "A grilled beef cut with a smoky touch, juicy inside and golden crust outside.",
+    fr: "Morceau de boeuf grille avec une touche fumee, juteux dedans et dore dehors."
+  },
+  "Parmentier": {
+    en: "Parmentier is a fine potato cream or puree, often used as a smooth base for stewed meats.",
+    fr: "La parmentier est une creme ou puree fine de pomme de terre, utilisee comme base douce pour les viandes mijotees."
+  }
+};
+
 Object.entries(touristInfo).forEach(([key, text]) => {
   menuDetails[key] = {
     ...(menuDetails[key] || {}),
-    touristInfo: text
+    touristInfo: {
+      es: text,
+      ...(touristInfoTranslations[key] || {})
+    }
   };
 });
 
